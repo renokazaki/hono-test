@@ -1,19 +1,15 @@
 import { Hono } from "hono";
-import { serve } from "@hono/node-server";
+import { handle } from "hono/vercel";
 
-const app = new Hono();
+export const runtime = "edge";
 
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
+const app = new Hono().basePath("/api");
+
+app.get("/hello", (c) => {
+  return c.json({
+    message: "Hello Next.js!",
+  });
 });
 
-const port = 3000;
-console.log(`Server is running on port ${port}`);
-
-serve({
-  fetch: app.fetch,
-  port: port,
-});
-
-// Vercel用のエクスポート
-export default app;
+export const GET = handle(app);
+export const POST = handle(app);
