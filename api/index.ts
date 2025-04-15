@@ -14,3 +14,6 @@ serve({
   fetch: app.fetch,
   port: port,
 });
+
+// Vercel用のエクスポート
+export default app;
